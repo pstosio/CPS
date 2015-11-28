@@ -43,4 +43,8 @@ dataset.addSeries("H1", target, 10, 0.0, 20.0);
 
         return chart;
     }
+
+    public JFreeChart createHistogram(ArrayList<Integer> time, ArrayList<Double> listSignalValues) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

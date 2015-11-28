@@ -8,9 +8,11 @@ package cpsControllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import javax.swing.JOptionPane;
 
 public class ConversionController {
-
+    HelperController helper;
+    
     public ArrayList<Double> sygSprobkowanyX = new ArrayList<>();
     public ArrayList<Double> sygSprobkowanyY = new ArrayList<>();
     public ArrayList<Double> sygSkwantowanyX = new ArrayList<Double>();
@@ -44,8 +46,8 @@ public class ConversionController {
         iloscPoziomowKwantyzacji = poziomy;
         czasTrwania = czas;
     }
-
-    public void probkowanie(ArrayList<Integer> xSygnalu, ArrayList<Double> ySygnalu) {
+    
+    public ArrayList<Double> probkowanie(ArrayList<Integer> xSygnalu, ArrayList<Double> ySygnalu) {
         int rozmiarSygnalu = xSygnalu.size();
         int deltaN = rozmiarSygnalu / (int) iloscProbek;
 //================================================================
@@ -59,8 +61,12 @@ public class ConversionController {
                     sygSprobkowanyX.add(rounding(xSygnalu.get(a)));
                     sygSprobkowanyY.add(rounding(ySygnalu.get(a)));
                 }
+//                System.out.println("probkowanie");
             }
         }
+//         System.out.print(sygSprobkowanyX);
+//        System.out.println("||");
+        return sygSprobkowanyY;
     }
 //MOJE PRÓBKOWANIE
 
@@ -76,7 +82,7 @@ public class ConversionController {
 //-------------------KWANTYZACJA-------------------------------
 //=============================================================
 
-    public void kwantyzacjaZobcieciem() {
+    public ArrayList<Double> kwantyzacjaZobcieciem(ArrayList<Double> sygSprobkowanyY) {
 //List<Double[]> results = signal;
 //List<Double[]> results2 = new ArrayList<Double[]>();
         double max = sygSprobkowanyY.get(0);
@@ -96,11 +102,12 @@ public class ConversionController {
         }
         for (int i = 0; i < sygSprobkowanyY.size(); i++) {
             Double tempX, tempY;
-            tempX = sygSprobkowanyX.get(i);
+//            tempX = sygSprobkowanyX.get(i);
             tempY = treeset.floor(sygSprobkowanyY.get(i));
-            sygSkwantowanyX.add(tempX);
+//            sygSkwantowanyX.add(tempX);
             sygSkwantowanyY.add(tempY);
         }
+        return sygSkwantowanyY;
     }
 //=============================================================
 //----------------Ekstrapolacja zerowego rzędu-----------------
@@ -799,4 +806,6 @@ public class ConversionController {
      //prostokatny();
      }
      */
+ 
+    
 }
