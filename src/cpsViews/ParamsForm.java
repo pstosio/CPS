@@ -682,17 +682,17 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
         
         
        ConversionController cc;
-       cc = new ConversionController(10, 500, time.size());
+       
        
         for (int t=Integer.parseInt(value_t1.getText()); t<=Integer.parseInt(value_d.getText()); t++){
             time.add(t); 
              LineChartController lcc = new LineChartController(); 
-           
+           cc = new ConversionController(10, 5, time.size());
             if (rodzajKonwersji == 1) {
                 listSignalValues.add(s5.sygnalS5(t));
                 lccPanel = new ChartPanel(lcc.printChart(time, cc.probkowanie(time, listSignalValues)));
 
-                    xmlc.saveXML(am);
+//                    xmlc.saveXML(am);
             } else if (rodzajKonwersji == 2) {
                 listSignalValues.add(s5.sygnalS5(t));
                 lccPanel = new ChartPanel(lcc.printChart(time, cc.kwantyzacjaZobcieciem(listSignalValues)));
