@@ -652,18 +652,63 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signalName.setText("");
                 break;
         }
+       
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        HelperController helper = new HelperController(typSygnalu, 
+            Double.parseDouble(value_a.getText()), 
+            Double.parseDouble(value_t1.getText()), 
+            Double.parseDouble(value_ts.getText()), 
+            Double.parseDouble(value_d.getText()), 
+            Double.parseDouble(value_t.getText()), 
+            Double.parseDouble(value_kw.getText()), 
+            Double.parseDouble(value_n1.getText()), 
+            Double.parseDouble(value_ns.getText()), 
+            Double.parseDouble(value_p.getText())
+        );
         
-        ConversionController cc = new ConversionController();
+        Signal01 s1 = new Signal01(helper);
+        Signal02 s2 = new Signal02(helper);
+        Signal03 s3 = new Signal03(helper);
+        Signal04 s4 = new Signal04(helper);
+        Signal05 s5 = new Signal05(helper);
+        Signal06 s6 = new Signal06(helper);
+        Signal07 s7 = new Signal07(helper);
+        Signal08 s8 = new Signal08(helper);
+        Signal09 s9 = new Signal09(helper);
+        Signal10 s10 = new Signal10(helper);
+        Signal11 s11 = new Signal11(helper);
+        
+        
+       ConversionController cc;
+       cc = new ConversionController(10, 500, time.size());
+       
         for (int t=Integer.parseInt(value_t1.getText()); t<=Integer.parseInt(value_d.getText()); t++){
-            time.add(t);
-            if (typSygnalu == 1) {
-                cc.probkowanie(time, listSignalValues);
+            time.add(t); 
+             LineChartController lcc = new LineChartController(); 
+           
+            if (rodzajKonwersji == 1) {
+                listSignalValues.add(s5.sygnalS5(t));
+                lccPanel = new ChartPanel(lcc.printChart(time, cc.probkowanie(time, listSignalValues)));
+
                     xmlc.saveXML(am);
+            } else if (rodzajKonwersji == 2) {
+                listSignalValues.add(s5.sygnalS5(t));
+                lccPanel = new ChartPanel(lcc.printChart(time, cc.kwantyzacjaZobcieciem(listSignalValues)));
             }
         }
+        
+            
+        LineChartController lcc1 = new LineChartController();
+            ChartPanel lccPanel1 = new ChartPanel(lcc1.printChart(time, listSignalValues)); 
+            jPanel1.setLayout(new java.awt.BorderLayout());
+            jPanel1.add(lccPanel1, BorderLayout.CENTER);
+            jPanel1.validate();
+        
+             jPanel2.setLayout(new java.awt.BorderLayout());
+            jPanel2.add(lccPanel, BorderLayout.CENTER);
+            jPanel2.validate();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -751,5 +796,6 @@ XMLController xmlc = new XMLController();
 AmplitudaModel am = new AmplitudaModel(time, listSignalValues);
 int typSygnalu;
 int rodzajKonwersji;
+ChartPanel lccPanel;
 
 }
