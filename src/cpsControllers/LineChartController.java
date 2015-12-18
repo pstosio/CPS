@@ -53,4 +53,38 @@ public class LineChartController extends JFrame {
     
     return chart;
   }
+   
+    /**
+     * Method for create line chart.
+     * 
+     * @param t
+     * @param values
+     * @return 
+     */
+    public JFreeChart printChart2(ArrayList<Double> t, ArrayList<Double> values) {
+
+    // Prepare the data set
+    XYSeries xySeries = new XYSeries("Number & Square Chart");
+    
+    double[] val = new double[values.size()];
+    for (int i = 0; i < val.length; i++) {
+        xySeries.add(i, values.get(i));
+    }
+        
+        
+      
+    XYDataset xyDataset = new XYSeriesCollection(xySeries);
+    
+    //Create the chart
+    JFreeChart chart = ChartFactory.createXYLineChart(
+        "Wykres liniowy", "Czas (t)", "Aplituda (A)", xyDataset,
+        PlotOrientation.VERTICAL, false, true, false);
+
+//    //Render the frame
+//    ChartFrame chartFrame = new ChartFrame("Wykres sygnalu ", chart);
+//    chartFrame.setVisible(true);
+//    chartFrame.setSize(800, 600);
+    
+    return chart;
+  }
 }

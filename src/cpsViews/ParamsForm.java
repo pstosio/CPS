@@ -94,11 +94,12 @@ public class ParamsForm extends javax.swing.JFrame {
         wartoscSkutecznaValue = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         signalName = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox();
+        jComboBox3 = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jLabel1.setText("Wybierz rodzaj sygnału:");
 
@@ -119,7 +120,7 @@ public class ParamsForm extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "wybierz typ sygnału...",
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "wybierz...",
             "Sygnal_S1",
             "Sygnal_S2",
             "Sygnal_S3",
@@ -194,7 +195,7 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
     );
     jPanel2Layout.setVerticalGroup(
         jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 353, Short.MAX_VALUE)
+        .addGap(0, 0, Short.MAX_VALUE)
     );
 
     mocSredniaValue.setBackground(java.awt.SystemColor.control);
@@ -220,22 +221,36 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
     signalName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
     signalName.setDisabledTextColor(java.awt.Color.white);
 
-    jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "wybierz typ konwersji sygnału...",
+    jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] {
+        "wybierz...",
         "Probkowanie",
         "Kwantyzacja",
-        "Ekstrapolacja",
-        "Interpolacj",
-        "Rekonstrukcja_sinc"}));
-jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-public void actionPerformed(java.awt.event.ActionEvent evt) {
-    jComboBox2ActionPerformed(evt);
-    }
+        "Interpolacja",
+    }));
+    jComboBox3.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jComboBox3ActionPerformed(evt);
+        }
     });
 
-    jButton2.setText("Konwertuj Sygnał");
+    jButton2.setText("Konwertuj sygnał");
     jButton2.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             jButton2ActionPerformed(evt);
+        }
+    });
+
+    jButton5.setText("Splot i Korelacja sygnałów");
+    jButton5.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton5ActionPerformed(evt);
+        }
+    });
+
+    jButton6.setText("Filtry Dolno / Górno przepustowe");
+    jButton6.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jButton6ActionPerformed(evt);
         }
     });
 
@@ -293,7 +308,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                                         .addComponent(sredniaBezwzglednaValue, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                                         .addComponent(mocSredniaValue))))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -302,18 +317,21 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(wartoscSkutecznaValue, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                                        .addComponent(wariancjaValue, javax.swing.GroupLayout.Alignment.TRAILING)))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(84, 84, 84)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addComponent(signalName, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(wariancjaValue, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                        .addComponent(signalName, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(0, 7, Short.MAX_VALUE))
                 .addGroup(layout.createSequentialGroup()
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())))
     );
     layout.setVerticalGroup(
@@ -323,7 +341,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(jLabel1)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -333,10 +351,10 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGap(18, 18, 18)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(sredniaValue, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -355,10 +373,12 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(mocSredniaValue, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel14))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGap(21, 21, 21)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addContainerGap())
                 .addGroup(layout.createSequentialGroup()
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -400,7 +420,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButton4)
                         .addComponent(jButton3))
-                    .addGap(0, 228, Short.MAX_VALUE))))
+                    .addGap(0, 194, Short.MAX_VALUE))))
     );
 
     pack();
@@ -627,31 +647,7 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_wariancjaValueActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        JComboBox convertBox = (JComboBox)evt.getSource();
-        String convertMethod = (String)convertBox.getSelectedItem();
         
-        if (null != convertMethod) switch (convertMethod) {
-            case "Probkowanie":
-                rodzajKonwersji = 1;
-                signalName.setText("");
-                break;
-            case "Kwantyzacja":
-                rodzajKonwersji = 2;
-                signalName.setText("");
-                break;
-            case "Ekstrapolacja":
-                rodzajKonwersji = 3;
-                signalName.setText("");
-                break;
-            case "Interpolacja":
-                rodzajKonwersji = 4;
-                signalName.setText("");
-                break;
-            case "Rekonstrukcja_sinc":
-                rodzajKonwersji = 5;
-                signalName.setText("");
-                break;
-        }
        
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
@@ -679,22 +675,21 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
         Signal09 s9 = new Signal09(helper);
         Signal10 s10 = new Signal10(helper);
         Signal11 s11 = new Signal11(helper);
-        
-        
-       ConversionController cc;
-       
+      
        
         for (int t=Integer.parseInt(value_t1.getText()); t<=Integer.parseInt(value_d.getText()); t++){
-            time.add(t); 
+//            time.add(t); 
              LineChartController lcc = new LineChartController(); 
-           cc = new ConversionController(10, 5, time.size());
+           
             if (rodzajKonwersji == 1) {
-                listSignalValues.add(s5.sygnalS5(t));
+                listSignalValues.add(s4.sygnalS4(t));
+                listSignalValuesKwant.addAll(cc.probkowanie(time, listSignalValues));
                 lccPanel = new ChartPanel(lcc.printChart(time, cc.probkowanie(time, listSignalValues)));
 
-//                    xmlc.saveXML(am);
+                    xmlc.saveXML(am);
             } else if (rodzajKonwersji == 2) {
-                listSignalValues.add(s5.sygnalS5(t));
+                listSignalValues.add(s4.sygnalS4(t));
+                listSignalValuesKwant.addAll(cc.kwantyzacjaZobcieciem(listSignalValues));
                 lccPanel = new ChartPanel(lcc.printChart(time, cc.kwantyzacjaZobcieciem(listSignalValues)));
             }
         }
@@ -710,6 +705,62 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
             jPanel2.add(lccPanel, BorderLayout.CENTER);
             jPanel2.validate();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+        
+        JComboBox convertBox = (JComboBox)evt.getSource();
+        String convertMethod = (String)convertBox.getSelectedItem();
+        
+        if (null != convertMethod) switch (convertMethod) {
+            case "Probkowanie":
+                rodzajKonwersji = 1;
+                signalName.setText("");
+                break;
+            case "Kwantyzacja":
+                rodzajKonwersji = 2;
+                signalName.setText("");
+                break;
+            case "Ekstrapolacja":
+                rodzajKonwersji = 3;
+                signalName.setText("");
+                break;
+            case "Interpolacja":
+                rodzajKonwersji = 4;
+                signalName.setText("");
+                break;
+            case "Rekonstrukcja_sinc":
+                rodzajKonwersji = 5;
+                signalName.setText("");
+                break;
+        }
+    }//GEN-LAST:event_jComboBox3ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+           
+            jPanel2.setLayout(new java.awt.BorderLayout());
+            jPanel2.add( cc.splot(time, listSignalValues, time, listSignalValuesKwant), BorderLayout.CENTER);
+            jPanel2.validate();
+            signalName.setText(" | Splot");
+            
+            jPanel1.setLayout(new java.awt.BorderLayout());
+            jPanel1.add(cc.korelacja(time, listSignalValues, time, listSignalValuesKwant),BorderLayout.CENTER);
+            jPanel1.validate();
+            signalName.setText("Korelacja | Splot");
+            
+           
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+            jPanel2.setLayout(new java.awt.BorderLayout());
+            jPanel2.add( cc.dolnoPrzepustowyOknoProstokatne(time, listSignalValuesKwant, Integer.parseInt(value_d.getText()), Double.parseDouble(value_f.getText()), 100, true), BorderLayout.CENTER);
+            jPanel2.validate();
+            signalName.setText(" | Filtr Dolnoprzepustowy Prostokątny");
+            
+            jPanel1.setLayout(new java.awt.BorderLayout());
+            jPanel1.add(cc.gornoPrzepustowyOknoProstokatne(time, listSignalValuesKwant, Integer.parseInt(value_d.getText()), Double.parseDouble(value_f.getText()), 100, true),BorderLayout.CENTER);
+            jPanel1.validate();
+            signalName.setText("Filtr Górnoprzepustowy Prostokątny | Filtr Dolnoprzepustowy Prostokątny");
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -751,8 +802,10 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -791,11 +844,14 @@ public void actionPerformed(java.awt.event.ActionEvent evt) {
 PropertiesController properties = new PropertiesController();
 HistogramController histogram = new HistogramController();
 ArrayList<Double> listSignalValues = new ArrayList<>();
+ArrayList<Double> listSignalValuesKwant = new ArrayList<>();
 ArrayList<Integer> time = new ArrayList<>();
 XMLController xmlc = new XMLController();
 AmplitudaModel am = new AmplitudaModel(time, listSignalValues);
 int typSygnalu;
 int rodzajKonwersji;
 ChartPanel lccPanel;
+
+ConversionController cc = new ConversionController(100, 700, time.size());
 
 }
