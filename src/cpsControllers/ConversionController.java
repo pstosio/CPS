@@ -9,9 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
+import org.jfree.chart.ChartPanel;
 
 public class ConversionController {
     HelperController helper;
+    LineChartController lcc;
+    ChartPanel lccPanel;
     
     public ArrayList<Double> sygSprobkowanyX = new ArrayList<>();
     public ArrayList<Double> sygSprobkowanyY = new ArrayList<>();
@@ -29,6 +32,8 @@ public class ConversionController {
     ArrayList<Double> korelacjaY = new ArrayList<Double>();
     ArrayList<Double> dolnoprzepustowyX = new ArrayList<Double>();
     ArrayList<Double> dolnoprzepustowyY = new ArrayList<Double>();
+    ArrayList<Double> gornoprzepustowyX = new ArrayList<Double>();
+    ArrayList<Double> gornoprzepustowyY = new ArrayList<Double>();
 //ArrayList<Double> transformataX = new ArrayList<Double>();
 //ArrayList<Double> trnasformataY = new ArrayList<Double>();
 //ArrayList<Double> transformataSzybkaX = new ArrayList<Double>();
@@ -47,6 +52,156 @@ public class ConversionController {
         czasTrwania = czas;
     }
     
+    /**
+     * Błąd średniokwadratowy (MSE, ang. <i>Mean Squared Error</i>)
+     *     
+     * @param punktyY
+     * @param _doPorownania
+     *     
+    * @return
+     */
+    public double obl_MSE(ArrayList<Double> punktyY, ArrayList<Double> _doPorownania) {
+        double wynik = 0;
+        try {
+            if (!punktyY.isEmpty() && !_doPorownania.isEmpty()) {
+                for (int i = 0; i < _doPorownania.size(); i++) {
+                    wynik = wynik + (punktyY.get(i) - _doPorownania.get(i))
+                            * (punktyY.get(i) - _doPorownania.get(i));
+                }
+                wynik = (1.0D / _doPorownania.size()) * wynik;
+            } else {
+                if (punktyY.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                } else if (_doPorownania.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak konwersji sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception exc_MSE) {
+//            JOptionPane.showMessageDialog(null, "Nie można obliczyć:\n" + exc_MSE.getMessage(),
+//                    "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("MSE = " + wynik);
+        return wynik;
+    }
+
+    /**
+     * Stosunek sygnał - szum (SNR, ang. <i>Signal to Noise Ratio</i>)
+     *     
+     * @param punktyY
+* @return
+     */
+    public double obl_SNR(ArrayList<Double> punktyY, ArrayList<Double> _doPorownania) {
+        double wynik = 0;
+        try {
+            if (!punktyY.isEmpty() && !_doPorownania.isEmpty()) {
+                double licznik = 0, mianownik = 0;
+                for (int i = 0; i < _doPorownania.size(); i++) {
+                    licznik = licznik
+                            + (punktyY.get(i) * punktyY.get(i));
+                }
+                for (int i = 0; i < _doPorownania.size(); i++) {
+                    mianownik = mianownik
+                            + (punktyY.get(i) - _doPorownania.get(i))
+                            * (punktyY.get(i) - _doPorownania.get(i));
+                }
+                wynik = licznik / mianownik;
+                wynik = 10.0D * Math.log10(wynik);
+            } else {
+                if (punktyY.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                } else if (_doPorownania.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak konwersji sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception exc_MSE) {
+//            JOptionPane.showMessageDialog(null, "Nie można obliczyć:\n" + exc_MSE.getMessage(),
+//                    "Błąd", JOptionPane.ERROR_MESSAGE);
+            wynik = -1;
+        }
+        
+        System.out.println("SNR = " + wynik);
+        return wynik;
+    }
+
+    /**
+     * Szczytowy stosunek sygnał - szum (PSNR, ang. <i>Peak Signal to Noise
+     * Ratio</i>)
+     *     
+* @return
+     */
+    public double obl_PSNR(ArrayList<Double> pynktyY, ArrayList<Double> _doPorownania) {
+        double wynik = 0;
+        try {
+            if (!pynktyY.isEmpty() && !_doPorownania.isEmpty()) {
+                double licznik = pynktyY.get(0), mianownik = 0;
+                for (int i = 1; i < _doPorownania.size(); i++) {
+                    if (licznik < pynktyY.get(i)) {
+                        licznik = pynktyY.get(i);
+                    }
+                }
+                mianownik = this.obl_MSE(pynktyY, _doPorownania);
+                wynik = licznik / mianownik;
+                wynik = 10.0D * Math.log10(wynik);
+            } else {
+                if (pynktyY.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                } else if (_doPorownania.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak zapisanej konwersji sygnału.",
+                            "Błąd", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception exc_MSE) {
+//            JOptionPane.showMessageDialog(null, "Nie można obliczyć:\n" + exc_MSE.getMessage(),
+//                    "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("PSNR = " + wynik);
+        return wynik;
+    }
+
+    
+    /**
+     * Maksymalna różnica (MD, ang. <i>Maximum Difference</i>)
+     *     
+     * @return
+     */
+    public double obl_MD(ArrayList<Double> punktyY, ArrayList<Double> _doPorownania) {
+        double wynik = 0;
+        try {
+            if (!punktyY.isEmpty() && !_doPorownania.isEmpty()) {
+                double tmp;
+                wynik = Math.abs(punktyY.get(0) - _doPorownania.get(0));
+                for (int i = 1; i < _doPorownania.size(); i++) {
+                    tmp = Math.abs(punktyY.get(i) - _doPorownania.get(i));
+                    if (wynik < tmp) {
+                        wynik = tmp;
+                    }
+                }
+            } else {
+                if (punktyY.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                } else if (_doPorownania.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Brak konwersji sygnału.", "Błąd",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        } catch (Exception exc_MSE) {
+//            JOptionPane.showMessageDialog(null, "Nie można obliczyć:\n" + exc_MSE.getMessage(),
+//                    "Błąd", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        System.out.println("MD = " + wynik);
+        return wynik;
+    }
+    
+
     public ArrayList<Double> probkowanie(ArrayList<Integer> xSygnalu, ArrayList<Double> ySygnalu) {
         int rozmiarSygnalu = xSygnalu.size();
         int deltaN = rozmiarSygnalu / (int) iloscProbek;
@@ -70,13 +225,14 @@ public class ConversionController {
     }
 //MOJE PRÓBKOWANIE
 
-    public void probkowanie2(ArrayList<Double> xSygnalu, ArrayList<Double> ySygnalu) {
+    public ArrayList<Double> probkowanie2(ArrayList<Integer> xSygnalu, ArrayList<Double> ySygnalu) {
         int rozmiarSygnalu = xSygnalu.size();
         int deltaN = rozmiarSygnalu / (int) iloscProbek;
         for (int i = 0; i < (rozmiarSygnalu - deltaN + 1 / (2 * deltaN)); i = i + deltaN) {
-            sygSprobkowanyX.add((xSygnalu.get(i)));
+//            sygSprobkowanyX.add((xSygnalu.get(i)));
             sygSprobkowanyY.add((ySygnalu.get(i)));
         }
+        return sygSprobkowanyY;
     }
 //=============================================================
 //-------------------KWANTYZACJA-------------------------------
@@ -113,12 +269,12 @@ public class ConversionController {
 //----------------Ekstrapolacja zerowego rzędu-----------------
 //=============================================================
 
-    public void ekstrapolacja(double frequency) {//ArrayList <Double> xSygnalu){
+    public ArrayList<Double> ekstrapolacja(ArrayList<Double> sygSprobkowanyY, double frequency) {//ArrayList <Double> xSygnalu){
         double przedzialCzasowy = sygSprobkowanyX.get(1) - sygSprobkowanyX.get(0);
         double ilosc = sygSprobkowanyX.get(sygSprobkowanyX.size() - 1) * frequency;
         double iloscPrzedzialow = sygSprobkowanyX.get(sygSprobkowanyX.size() - 1) / przedzialCzasowy;
         int probekNAprzedzial = (int) ilosc / (int) iloscPrzedzialow;
-        int licz = 0, licz2 = 0;;
+        int licz = 0, licz2 = 0;
         for (double t = sygSprobkowanyX.get(0); t <= sygSprobkowanyX.get(sygSprobkowanyX.size() - 1) + (1.0 / (1.5 * frequency)); t += (1 / frequency)) {
             if (licz == probekNAprzedzial) {
                 licz = 0;
@@ -135,6 +291,7 @@ public class ConversionController {
 //System.out.println(" "+iloscPrzedzialow);
 //System.out.println(zrekonstuowanyY.size()+" dlugosc rekonstrkcji");
 //System.out.println(xSygnalu.size()+" dlugosc oryginału");
+        return zrekonstuowanyY;
     }
 //=============================================================
 // --------------------- SINC ---------------------------------
@@ -168,34 +325,39 @@ public class ConversionController {
 // --------------------- SPLOT ---------------------------------
 //=============================================================
 
-    public void splot(ArrayList<Double> x, ArrayList<Double> y, ArrayList<Double> x1, ArrayList<Double> y1) {
+    public ChartPanel splot(ArrayList<Integer> x, ArrayList<Double> y, ArrayList<Integer> x1, ArrayList<Double> y1) {
         int size = x.size() + x1.size() - 1;
         double sum = 0;
         for (int i = 0; i < size; i++) {
             sum = 0;
             for (int j = 0; j < x.size(); j++) {
-//if ((i-j) >= 0 && (i-j) < x.size())
-//{//System.out.println("in");
-                try {
-                    sum += y.get(j) * y1.get(i - j);
-                } catch (Exception e) {
+                if ((i - j) >= 0 && (i - j) < x.size()) {
+//                System.out.println("in");
+                    try {
+                        sum += y.get(j) * y1.get(i - j);
+                    } catch (Exception e) {
+                    }
                 }
-//}//System.out.println(j);
-//;
+//                System.out.println(j);
+
             }
-//if(i*0.01 < 0.5){
-            splotX.add(i * 0.01);
-            splotY.add(sum);
-//}
+            if (i * 0.01 < 0.5) {
+                splotX.add(i * 0.01);
+                splotY.add(sum);
+            }
         }
-//System.out.println(splotX);
-//System.out.println(splotY);
+
+        
+        lcc= new LineChartController();
+        lccPanel = new ChartPanel(lcc.printChart2(splotX, splotY));
+        
+        return lccPanel;
     }
 //=============================================================
 // --------------------- KORELACJA ----------------------------
 //=============================================================
 
-    public void korelacja(ArrayList<Double> Hx, ArrayList<Double> Hy, ArrayList<Double> Sx, ArrayList<Double> Sy) {
+    public ChartPanel korelacja(ArrayList<Integer> Hx, ArrayList<Double> Hy, ArrayList<Integer> Sx, ArrayList<Double> Sy) {
         int size = Hx.size() + Sx.size() - 1;
         double sum = 0;
         for (int i = 0; i < size; i++) {
@@ -209,6 +371,12 @@ public class ConversionController {
             korelacjaX.add(i * 0.01);
             korelacjaY.add(sum);
         }
+        
+        lcc= new LineChartController();
+        lccPanel = new ChartPanel(lcc.printChart2(korelacjaX, korelacjaY));
+        
+        return lccPanel;
+        
 //System.out.println(korelacjaX);
 //System.out.println(korelacjaY);
 /*
@@ -487,7 +655,7 @@ public class ConversionController {
 //f0 - częstotliwośc obcięcia sygnału
 // filtration = TRUE
 
-    public void lowPassFilterRect(ArrayList<Double> Sx, ArrayList<Double> Sy, int m, double fp, double fo, boolean filtration) {
+    public ChartPanel dolnoPrzepustowyOknoProstokatne(ArrayList<Integer> Sx, ArrayList<Double> Sy, int m, double fp, double fo, boolean filtration) {
 //List<Double[]> filter = new ArrayList<Double[]>();
         ArrayList<Double> Hx = new ArrayList<Double>();
         ArrayList<Double> Hy = new ArrayList<Double>();
@@ -509,7 +677,7 @@ public class ConversionController {
                 x.add(tempX);
                 y.add(tempY);
             }
-            splot(Hx, Hy, x, y);
+//            splot(Hx, Hy, x, y);
             dolnoprzepustowyX = splotX;
             dolnoprzepustowyY = splotY;
 //filter = f.splot(h, x);
@@ -517,12 +685,17 @@ public class ConversionController {
             dolnoprzepustowyX = Hx;
             dolnoprzepustowyY = Hy;
         }
+        
+        lcc= new LineChartController();
+        lccPanel = new ChartPanel(lcc.printChart2(dolnoprzepustowyX, dolnoprzepustowyY));
+        
+        return lccPanel;
     }
 //===================================================================
 // ------------ GÓRNOPRZEPUSTOWY OKNO PROSTOKATNE -------------------
 //===================================================================
 
-    public void gornoPrzepustowyOknoProstokatne(ArrayList<Double> Sx, ArrayList<Double> Sy, int m, double fp, double fo, boolean filtration) {
+    public ChartPanel gornoPrzepustowyOknoProstokatne(ArrayList<Integer> Sx, ArrayList<Double> Sy, int m, double fp, double fo, boolean filtration) {
 //List<Double[]> filter = new ArrayList<Double[]>();
         ArrayList<Double> Hx = new ArrayList<Double>();
         ArrayList<Double> Hy = new ArrayList<Double>();
@@ -545,14 +718,17 @@ public class ConversionController {
                 x.add(tempX);
                 y.add(tempY);
             }
-            splot(Hx, Hy, x, y);
-            dolnoprzepustowyX = splotX;
-            dolnoprzepustowyY = splotY;
-//filter = f.splot(h, x);
+            gornoprzepustowyX = splotX;
+            gornoprzepustowyY = splotY;
         } else {
-            dolnoprzepustowyX = Hx;
-            dolnoprzepustowyY = Hy;
+            gornoprzepustowyX = Hx;
+            gornoprzepustowyY = Hy;
         }
+        
+        lcc= new LineChartController();
+        lccPanel = new ChartPanel(lcc.printChart2(dolnoprzepustowyX, dolnoprzepustowyY));
+        
+        return lccPanel;
     }
 
     public double lowPassFilter(int n, int m, double k) {
@@ -749,7 +925,12 @@ public class ConversionController {
          sygSprobkowanyY.add(3.0);
          sygSprobkowanyY.add(4.0);
          sygSprobkowanyY.add(5.0);*/
-        splot(sygSprobkowanyX, sygSprobkowanyY, prostokatnyX, prostokatnyY);
+                                    
+
+//!!!!!!!!!!        splot(sygSprobkowanyX, sygSprobkowanyY, prostokatnyX, prostokatnyY);
+
+
+
 //splot(prostokatnyX,prostokatnyY,sygSprobkowanyX,sygSprobkowanyY);
     }
     /*
