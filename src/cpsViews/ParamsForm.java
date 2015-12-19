@@ -719,7 +719,12 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
                         listSignalValuesKwant.addAll(cc.probkowanie(time, listSignalValues));
                         lccPanel = new ChartPanel(lcc.printChart(time, cc.probkowanie(time, listSignalValues)));
                         break;
-                            
+                     
+                    case 7:
+                        listSignalValues.add(s7.sygnalS7(t));
+                        listSignalValuesKwant.addAll(cc.probkowanie(time, listSignalValues));
+                        lccPanel = new ChartPanel(lcc.printChart(time, cc.probkowanie(time, listSignalValues)));
+                        break;
                         
                     
                 }
@@ -727,6 +732,14 @@ jComboBox1.addActionListener(new java.awt.event.ActionListener() {
 
                     xmlc.saveXML(am);
             } else if (rodzajKonwersji == 2) {
+                /*switch((typSygnalu))
+                {
+                    case 1:
+                        
+                        
+                        break;
+                    
+                }*/
                 listSignalValues.add(s4.sygnalS4(t));
                 listSignalValuesKwant.addAll(cc.kwantyzacjaZobcieciem(listSignalValues));
                 lccPanel = new ChartPanel(lcc.printChart(time, cc.kwantyzacjaZobcieciem(listSignalValues)));
